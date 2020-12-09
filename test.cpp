@@ -1,7 +1,7 @@
 ﻿#include "encode.h"
 #include "decode.h"
 #include <memory>
-
+#include <thread>
 
 int main(int argc, char* argv[])
 {
@@ -63,7 +63,8 @@ int main(int argc, char* argv[])
 			if (output != nullptr)
 			{		
 				encode.get()->CompressFile(input, output);
-				fclose(input);
+				if (fclose(input) != 0)
+					std::cout << "Error close file: " <<  input << std::endl;
 				encode.get()->print_ratios(sInputPath, sOutputPath);
 			}
 			else
@@ -85,7 +86,8 @@ int main(int argc, char* argv[])
 			if (output != nullptr)
 			{	
 				decode.get()->ExpandFile(input, output);
-				fclose(output);
+				if (fclose(output) != 0)
+					std::cout << "Error close file: " <<  output << std::endl;
 			}
 			else 
 				decode.get()->fatal_error("Error open target file");

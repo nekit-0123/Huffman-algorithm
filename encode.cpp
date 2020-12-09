@@ -81,14 +81,15 @@ void CEncode::CloseOutputCompressedFile(COMPRESSED_FILE* compressed_file)
 			compressed_file->rack)
 			fatal_error("Error on close compressed file.");
 	fclose(compressed_file->file);
-	free((char*)compressed_file);
+
+	delete compressed_file;
+	compressed_file = nullptr;
 }
 
 //===========================================================================
 COMPRESSED_FILE* CEncode::OpenOutputCompressedFile(const std::string& name)
 {
-	 COMPRESSED_FILE*  compressed_file = (COMPRESSED_FILE*)
-		calloc(1, sizeof(COMPRESSED_FILE));
+	 COMPRESSED_FILE*  compressed_file = new (std::nothrow)  COMPRESSED_FILE;
 	if (compressed_file == nullptr)
 		return(compressed_file);
 	compressed_file->file = fopen(name.c_str(), "wb");

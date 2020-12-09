@@ -14,10 +14,7 @@
 #define NODE_TABLE_COUNT ((SYMBOL_COUNT * 2) - 1)
 #define ROOT_NODE 0
 #define MAX_WEIGHT 0x8000 
-#define TRUE 1
-#define FALSE 0
 #define PACIFIER_COUNT 2047
-#define NO_ERROR 0
 #define BAD_FILE_NAME 1
 #define BAD_ARGUMENT 2
 

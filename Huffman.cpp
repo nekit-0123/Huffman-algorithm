@@ -13,16 +13,16 @@ CHuffman::~CHuffman()
 void CHuffman::InitializeTree(TREE* tree)
 {
 	tree->nodes[ROOT_NODE].child = ROOT_NODE + 1;
-	tree->nodes[ROOT_NODE].child_is_leaf = FALSE;
+	tree->nodes[ROOT_NODE].child_is_leaf = false;
 	tree->nodes[ROOT_NODE].weight = 2;
 	tree->nodes[ROOT_NODE].parent = -1;
 	tree->nodes[ROOT_NODE + 1].child = END_OF_STREAM;
-	tree->nodes[ROOT_NODE + 1].child_is_leaf = TRUE;
+	tree->nodes[ROOT_NODE + 1].child_is_leaf = true;
 	tree->nodes[ROOT_NODE + 1].weight = 1;
 	tree->nodes[ROOT_NODE + 1].parent = ROOT_NODE;
 	tree->leaf[END_OF_STREAM] = ROOT_NODE + 1;
 	tree->nodes[ROOT_NODE + 2].child = ESCAPE;
-	tree->nodes[ROOT_NODE + 2].child_is_leaf = TRUE;
+	tree->nodes[ROOT_NODE + 2].child_is_leaf = true;
 	tree->nodes[ROOT_NODE + 2].weight = 1;
 	tree->nodes[ROOT_NODE + 2].parent = ROOT_NODE;
 	tree->leaf[ESCAPE] = ROOT_NODE + 2;
@@ -89,7 +89,7 @@ void CHuffman::RebuildTree(TREE* tree)
 		tree->nodes[j].weight =
 			tree->nodes[i].weight + tree->nodes[k].weight;
 		weight = tree->nodes[j].weight;
-		tree->nodes[j].child_is_leaf = FALSE;
+		tree->nodes[j].child_is_leaf = false;
 		for (k = j + 1; weight < tree->nodes[k].weight; k++)
 			;
 		k--;
@@ -97,7 +97,7 @@ void CHuffman::RebuildTree(TREE* tree)
 			(k - j) * sizeof(struct node));
 		tree->nodes[k].weight = weight;
 		tree->nodes[k].child = i;
-		tree->nodes[k].child_is_leaf = FALSE;
+		tree->nodes[k].child_is_leaf = false;
 	}
 
 	for (i = tree->next_free_node - 1; i >= ROOT_NODE; i--)
@@ -152,10 +152,10 @@ void CHuffman::add_new_node(TREE* tree, int c)
 	tree->leaf[tree->nodes[new_node].child] = new_node;
 
 	tree->nodes[lightest_node].child = new_node;
-	tree->nodes[lightest_node].child_is_leaf = FALSE;
+	tree->nodes[lightest_node].child_is_leaf = false;
 
 	tree->nodes[zero_weight_node].child = c;
-	tree->nodes[zero_weight_node].child_is_leaf = TRUE;
+	tree->nodes[zero_weight_node].child_is_leaf = true;
 	tree->nodes[zero_weight_node].weight = 0;
 	tree->nodes[zero_weight_node].parent = lightest_node;
 	tree->leaf[c] = zero_weight_node;

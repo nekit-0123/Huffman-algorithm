@@ -12,8 +12,7 @@ CDecode::~CDecode()
 COMPRESSED_FILE* CDecode::OpenInputCompressedFile(const std::string& name)
 {
 
-	 COMPRESSED_FILE*  compressed_file = (COMPRESSED_FILE*)
-		calloc(1, sizeof(COMPRESSED_FILE));
+	 COMPRESSED_FILE*  compressed_file = new (std::nothrow) COMPRESSED_FILE;
 	if (compressed_file == nullptr)
 		return(compressed_file);
 	compressed_file->file = fopen(name.c_str(), "rb");
@@ -43,7 +42,9 @@ void CDecode::ExpandFile(COMPRESSED_FILE* input, FILE* output)
 void CDecode::CloseInputCompressedFile(COMPRESSED_FILE* compressed_file)
 {
 	fclose(compressed_file->file);
-	free((char*)compressed_file);
+
+	delete compressed_file;
+	compressed_file = nullptr;
 }
 
 //===========================================================================
